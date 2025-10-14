@@ -1,0 +1,39 @@
+# Arquivos Python compilados
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Ambientes virtuais
+venv/
+.env/
+.venv/
+
+# Configurações do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos temporários de downloads ou execuções
+*.log
+*.tmp
+*.bak
+
+# Arquivos Excel baixados/modificados
+*.xlsx
+
+# Configurações de IDEs
+.vscode/
+.idea/
+
+# Arquivos de configuração pessoal
+*.env
+*.local
+
+# Drivers do Selenium (caso baixe manualmente)
+chromedriver.exe
+geckodriver.exe
+
+# Jupyter notebooks temporários (se usar)
+.ipynb_checkpoints/
+
+# Pasta de output ou testes
+output/
