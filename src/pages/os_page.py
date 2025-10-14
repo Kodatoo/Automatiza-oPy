@@ -27,3 +27,7 @@ def preencher_datas(driver):
         time.sleep(2)
     else:
         print("[ERRO] Campos de data não encontrados.")
+
+def botao_filtrar(driver):
+    filtros = driver.find_element(By.CLASS_NAME, "uk-button")
+    filtros.click()

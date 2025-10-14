@@ -1,6 +1,6 @@
 from navegador.driver_setup import iniciar_driver
 from pages.login import fazer_login
-from pages.os_page import navegar_para_ordem_servico, preencher_datas
+from pages.os_page import navegar_para_ordem_servico, preencher_datas, botao_filtrar
 
 import sys
 import os
@@ -16,6 +16,7 @@ def main():
     fazer_login(driver, email, senha)
     navegar_para_ordem_servico(driver)
     preencher_datas(driver)
+    botao_filtrar(driver)
     
     # Próximos passos...
 
