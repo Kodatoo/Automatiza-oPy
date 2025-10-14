@@ -1,16 +1,15 @@
-# Bibliotecas padrão do Python
-import os
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 import time
 import datetime
-import shutil
-import glob
 
-# Selenium e WebDriver
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
+# Configura o serviço do ChromeDriver
+service = Service(ChromeDriverManager().install())
+driver = webdriver.Chrome(service=service)
 
-# Manipulação de Excel
-import openpyxl
+driver.get("https://hc.harmonit.com.br/")
+
+time.sleep(5)
+
+# driver.quit()
