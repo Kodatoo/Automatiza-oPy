@@ -2,7 +2,9 @@ import time
 from datetime import datetime
 from selenium.webdriver.common.by import By
 import pyautogui
-
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 def navegar_para_ordem_servico(driver):
     ordem_de_servico = driver.find_element(By.ID, "menu_35")
@@ -34,36 +36,21 @@ def botao_filtrar(driver):
     filtros = driver.find_element(By.CLASS_NAME, "uk-button")
     filtros.click()
 
-# Constantes para a coordenada (opcional, mas boa prática)
-X_COORD = 1815
-Y_COORD = 1008
 
-
-time.sleep(30)
-
-def clicar_coordenada_pyautogui():
+def botao_Excel(driver, iframe_selector="iframe", timeout=50):
     """
-    Move o mouse para a coordenada (X=1815, Y=1008) na tela e clica.
-    
-    Aviso: Esta função depende da resolução da tela e da posição da janela.
-    Recomendado apenas como último recurso de automação.
-    """
-    
-    # Adiciona um pequeno delay de segurança antes de mover o mouse
-    # Isso é bom para dar tempo ao sistema para processar
-    time.sleep(1) 
-    
+    Clica no botão de exportação para Excel dentro da grid5    """
+
     try:
-        # Move o mouse para a coordenada
-        # O argumento 'duration' (duração) é opcional e simula um movimento humano
-        pyautogui.moveTo(X_COORD, Y_COORD, duration=0.5)
-        time.sleep(15)
-        
-        # Clica na coordenada atual
-        pyautogui.click()
-        
-        print(f"PyAutoGUI: Mouse movido para ({X_COORD}, {Y_COORD}) e clique realizado.")
-        
-    except Exception as e:
-        print(f"Erro ao executar PyAutoGUI: {e}")
-        print("Certifique-se de que o PyAutoGUI está instalado e as permissões estão corretas.")
+        print("Aguardando botão de exportação...")
+        botao = WebDriverWait(driver, timeout).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR,
+                "#containerBIOSPrincipalGridList__gridArrayContainer > div > div.dx-datagrid-header-panel > div > div > div.dx-toolbar-after > div:nth-child(3) > div > div"
+            ))
+        )
+        print("Botão encontrado. Clicando...")
+        botao.click()
+        print("Exportação iniciada com sucesso.")
+
+    except (NoSuchElementException, TimeoutException) as e:
+        print(f"Erro ao localizar ou clicar no botão: {e}")

@@ -1,6 +1,6 @@
 from navegador.driver_setup import iniciar_driver
 from pages.login import fazer_login
-from pages.os_page import navegar_para_ordem_servico, preencher_datas, botao_filtrar, clicar_coordenada_pyautogui
+from pages.os_page import navegar_para_ordem_servico, preencher_datas, botao_filtrar,botao_Excel
 
 import sys
 import os
@@ -17,9 +17,8 @@ def main():
     navegar_para_ordem_servico(driver)
     preencher_datas(driver)
     botao_filtrar(driver)
-    clicar_coordenada_pyautogui()
-    
-    # Próximos passos...
+    botao_Excel(driver)
+ 
 
 if __name__ == "__main__":
     main()
