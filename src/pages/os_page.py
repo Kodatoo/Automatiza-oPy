@@ -2,6 +2,7 @@ import time
 from datetime import datetime
 from selenium.webdriver.common.by import By
 import pyautogui
+import os
 from openpyxl import load_workbook
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
@@ -40,8 +41,7 @@ def botao_filtrar(driver):
 
 
 def botao_Excel(driver, iframe_selector="iframe", timeout=70):
-    """
-    Clica no botão de exportação para Excel dentro da grid5    """
+   
 
     try:
         print("Aguardando botão de exportação...")
@@ -57,31 +57,19 @@ def botao_Excel(driver, iframe_selector="iframe", timeout=70):
     except (NoSuchElementException, TimeoutException) as e:
         print(f"Erro ao localizar ou clicar no botão: {e}")
 
-def editar_excel_remover_ultima_linha(nome_arquivo="BIOS.xlsx"):
-    pasta_downloads = os.path.expanduser("~/Downloads")
-    caminho_arquivo = os.path.join(pasta_downloads, nome_arquivo)
-
-    
-    tempo_max_espera = 30
-    tempo_inicial = time.time()
-    while not os.path.exists(caminho_arquivo):
-        if time.time() - tempo_inicial > tempo_max_espera:
-            print(f"[ERRO] Arquivo {nome_arquivo} não encontrado após {tempo_max_espera} segundos.")
-            return
-        time.sleep(1)
-
+def botao_Hora(driver, timeout=70):
     try:
-        wb = load_workbook(caminho_arquivo)
-        ws = wb.active
+        print("Aguardando botão de exportação de horas...")
+        botao = WebDriverWait(driver, timeout).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR,
+                "#containerPorHoraGridList__gridArrayContainer > div > div.dx-datagrid-header-panel > div > div > div.dx-toolbar-after > div:nth-child(2) > div > div"
+            ))
+        )
+        print("Botão de horas encontrado. Clicando...")
+        botao.click()
+        print("Exportação de horas iniciada com sucesso.")
+    except (NoSuchElementException, TimeoutException) as e:
+        print(f"[ERRO] Erro ao localizar ou clicar no botão de horas: {e}")
 
-        ultima_linha = ws.max_row
-        if ultima_linha > 1:
-            ws.delete_rows(ultima_linha)
-            wb.save(caminho_arquivo)
-            print(f"[INFO] Última linha removida com sucesso do arquivo {nome_arquivo}.")
-        else:
-            print("[AVISO] Nenhuma linha foi removida. O arquivo tem apenas uma linha.")
 
-    except Exception as e:
-        print(f"[ERRO] Ocorreu um erro ao editar o arquivo Excel: {e}")
 
